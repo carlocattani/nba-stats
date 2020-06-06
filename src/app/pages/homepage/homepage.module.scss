@@ -1,0 +1,31 @@
+.cover {
+  background: url(../../../assets/homepage/cover.png) no-repeat center center fixed;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+}
+
+.container {
+  padding: 20px;
+}
+
+.searchInput {
+  width: 50%;
+  margin-top: 120px;
+  transform: translateX(50%);
+}
+
+@media (max-width: 960px) {
+  .container {
+    padding: 0;
+  }
+
+  .searchInput {
+    width: 100%;
+    margin-top: 50px;
+    transform: translateX(0);
+  }
+}

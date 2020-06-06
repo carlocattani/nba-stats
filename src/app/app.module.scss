@@ -1,0 +1,20 @@
+@import 'typography';
+
+body {
+  @extend %font-body;
+  margin: 0;
+}
+
+.container {
+  padding: $navbarOffset 20px 20px 20px;
+}
+
+.loading {
+  margin: 20px;
+}
+
+@media (max-width: 960px) {
+  .container {
+    padding: $navbarOffset 8px 20x 8px;
+  }
+}

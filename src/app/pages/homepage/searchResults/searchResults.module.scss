@@ -1,0 +1,45 @@
+@import 'typography';
+@import 'mixin';
+
+.container {
+  background-color: $white;
+  max-height: 40vh;
+  border: 3px solid $gray200;
+  border-top: 0;
+  overflow-y: auto;
+  -webkit-animation: fade-in 200ms ease-out;
+  animation: fade-in 200ms ease-out;
+}
+
+.inputWithSearchResults {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.row {
+  padding: 8px 16px;
+}
+
+.resultRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    background-color: $primary-light;
+  }
+}
+
+.team {
+  @extend %font-caption;
+  color: $primary;
+}
+
+@include keyframes(fade-in) {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,24 @@
+@import 'typography';
+
+.logo {
+  @extend %h1;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.icon {
+  color: $secondary;
+}
+
+.nba {
+  color: $primary;
+}
+
+.stats {
+  color: $secondary;
+}

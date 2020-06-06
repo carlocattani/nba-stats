@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "esnext",
+    "baseUrl": ".",
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "removeComments": true,
+    "skipLibCheck": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react",
+    "paths": {
+      "@assets": ["src/assets"],
+      "@services": ["src/app/services/index.ts"],
+      "@common-ui": ["src/common-ui/index.ts"],
+      "@testing": ["src/testingindex.ts"]
+    }
+  },
+  "include": ["src", "typings/*.d.ts"],
+  "co mpileOnSave": false,
+  "exclude": ["node_modules"]
+}
