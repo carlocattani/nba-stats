@@ -13,13 +13,6 @@ export const PlayerPicture: React.FC<PlayerPictureProps> = ({ player }) => {
   const [pictureUrl, setPictureUrl] = useState<string>();
 
   useEffect(() => {
-    setLoading(true);
-
-    window.setTimeout(() => {
-      setPictureUrl(noPicture);
-      setLoading(false);
-    }, 1000);
-    /*
     if (player && !pictureUrl) {
       setLoading(true);
       fetchPlayerPicture(player.first_name, player.last_name)
@@ -42,7 +35,6 @@ export const PlayerPicture: React.FC<PlayerPictureProps> = ({ player }) => {
         window.URL.revokeObjectURL(pictureUrl);
       }
     };
-    */
   }, [player, pictureUrl]);
 
   if (!player) {

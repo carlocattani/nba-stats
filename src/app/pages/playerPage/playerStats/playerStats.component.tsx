@@ -1,47 +1,32 @@
-import React, { useState, useEffect, ReactNode } from 'react';
+import React, { useEffect, ReactNode } from 'react';
 import style from './playerStats.module.scss';
-import {
-  fetchSeasonAverages,
-  SeasonAverages,
-  seasonAveragesLabelMap,
-  SeasonAveragesLabelMap
-} from '@services';
-import { mockSeasonAverages } from '@testing';
+import { seasonAveragesLabelMap } from '@services';
 import { Loading } from '@common-ui';
 import cx from 'classnames';
+import { StatsSelector, SeasonAvgByYear, StatsAction } from '@store';
+import { useSelector, useDispatch } from 'react-redux';
 
 interface PlayerStatsProps {
   playerId: number;
 }
 
 export const PlayerStats: React.FC<PlayerStatsProps> = ({ playerId }) => {
-  const [loading, setLoading] = useState<boolean>();
-  // an array of stats, containing season averages for different seasons
-  const [stats, setStats] = useState<SeasonAverages[]>();
-  const [labels, setLabels] = useState<SeasonAveragesLabelMap>();
+  const dispatch = useDispatch();
+  const loading = useSelector(StatsSelector.isLoading);
+  const statsByYear: SeasonAvgByYear = useSelector(StatsSelector.getPlayerStats(playerId));
 
   useEffect(() => {
-    if (playerId) {
-      setLoading(true);
-      window.setTimeout(() => {
-        setStats([mockSeasonAverages]);
-        setLabels(seasonAveragesLabelMap);
-        setLoading(false);
-      }, 1000);
-      /*
-      fetchSeasonAverages({ player_ids: [playerId] }).then((response: SeasonAveragesResponse) => {
-        setStats(response);
-      });
-      */
+    if (playerId && !statsByYear) {
+      dispatch(StatsAction.getSeasonAverages.request({ player_ids: [playerId] }));
     }
   }, [playerId]);
 
   const headerRow: ReactNode = (
     <div className={cx(style.row, style.headerRow)}>
       <div className={style.labelField}>Season</div>
-      {stats?.map(s => (
-        <div key={s.season} className={style.valueField}>
-          {s.season}
+      {Object.keys(statsByYear || {}).map(year => (
+        <div key={year} className={style.valueField}>
+          {year}
         </div>
       ))}
     </div>
@@ -49,7 +34,7 @@ export const PlayerStats: React.FC<PlayerStatsProps> = ({ playerId }) => {
 
   const dataRows: ReactNode = (
     <>
-      {stats?.length > 0 ? (
+      {Object.keys(statsByYear || {}).length > 0 ? (
         <>
           {headerRow}
           {Object.entries(seasonAveragesLabelMap).map(([statKey, label]) => (
@@ -58,10 +43,10 @@ export const PlayerStats: React.FC<PlayerStatsProps> = ({ playerId }) => {
                 <div className={style.label}>{label.code}</div>
                 <div className={style.description}>{label.description}</div>
               </div>
-              {stats.map(s => (
-                <div key={s.season} className={style.valueField}>
-                  {typeof s[statKey] !== 'undefined' && (
-                    <div className={style.value}>{s[statKey]}</div>
+              {Object.entries(statsByYear || {}).map(([year, avg]) => (
+                <div key={year} className={style.valueField}>
+                  {typeof avg[statKey] !== 'undefined' && (
+                    <div className={style.value}>{avg[statKey]}</div>
                   )}
                 </div>
               ))}

@@ -2,8 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import cx from 'classnames';
 import style from './searchInput.module.scss';
 import { Input } from '@common-ui';
-import { Player } from '@services';
-import { mockPlayers } from '../../../../testing/player/player.mock';
+import { Player, PlayersResponse, fetchPlayers } from '@services';
 import debounce from 'lodash.debounce';
 import SearchResults from '../searchResults/searchResults.component';
 import { AiOutlineSearch } from 'react-icons/ai';
@@ -21,15 +20,13 @@ export const SearchInput: React.FC = () => {
   useEffect(() => {
     if (searchQuery) {
       setLoadingResults(true);
-      /*
-      fetchPlayers({ search: searchQuery }).then((response: PlayersResponse) => {
-        setSearchResults(response?.data ? response.data : []);
-      });
-      */
-      window.setTimeout(() => {
-        setSearchResults(mockPlayers);
-        setLoadingResults(false);
-      }, 300);
+      fetchPlayers({ search: searchQuery })
+        .then((response: PlayersResponse) => {
+          setSearchResults(response?.data || []);
+        })
+        .finally(() => {
+          setLoadingResults(false);
+        });
     } else {
       setSearchResults([]);
     }

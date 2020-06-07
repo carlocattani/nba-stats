@@ -19,7 +19,7 @@ export const fetchPlayers = (request: PlayersRequest): Promise<PlayersResponse> 
  * endpoint to retrieve a single player
  * @param id
  */
-export const fetchPlayer = (id: string): Promise<Player> => {
+export const fetchPlayer = (id: number): Promise<Player> => {
   const endpoint = `${API}/players/${id}`;
   return fetch(endpoint).then(r => toJsonResponse<Player>(r));
 };
@@ -29,8 +29,6 @@ export const fetchPlayer = (id: string): Promise<Player> => {
  * @param id
  */
 export const fetchPlayerPicture = (firstName: string, lastName: string): Promise<Blob> => {
-  firstName = 'curry';
-  lastName = 'stephen';
   const endpoint = `https://nba-players.herokuapp.com/players/${firstName}/${lastName}`;
   return fetch(endpoint).then(response => {
     const contentType = response.headers.get('content-type');

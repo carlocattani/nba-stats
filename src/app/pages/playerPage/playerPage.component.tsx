@@ -1,23 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Player, fetchPlayer } from '@services';
 import style from './playerPage.module.scss';
-import { mockPlayer } from '@testing';
 import { PlayerDetails } from './playerDetails/playerDetails.component';
 import { PlayerStats } from './playerStats/playerStats.component';
+import { useSelector, useDispatch } from 'react-redux';
+import { PlayerSelector, PlayerAction } from '@store';
 
 const PlayerPage: React.FC = () => {
   const { id } = useParams();
-  const [player, setPlayer] = useState<Player>();
+  const dispatch = useDispatch();
+  const player = useSelector(PlayerSelector.getPlayer(id));
 
   useEffect(() => {
-    setPlayer(mockPlayer);
-    /*
-    fetchPlayer(id).then(player => {
-      setPlayer(player);
-    });
-    */
-  }, [id]);
+    if (id && !player) {
+      dispatch(PlayerAction.getPlayer.request(id));
+    }
+  }, [id, player]);
 
   return (
     <div className={style.container}>

@@ -16,6 +16,7 @@
     "paths": {
       "@assets": ["src/assets"],
       "@services": ["src/app/services/index.ts"],
+      "@store": ["src/app/store/index.ts"],
       "@common-ui": ["src/common-ui/index.ts"],
       "@testing": ["src/testing/index.ts"]
     }

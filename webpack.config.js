@@ -21,6 +21,7 @@ module.exports = env => {
       alias: {
         '@assets': path.resolve(__dirname, './src/assets'),
         '@services': path.resolve(__dirname, './src/app/services/index.ts'),
+        '@store': path.resolve(__dirname, './src/app/store/index.ts'),
         '@common-ui': path.resolve(__dirname, './src/common-ui/index.ts'),
         '@testing': path.resolve(__dirname, './src/testing/index.ts')
       }

@@ -4,6 +4,8 @@ import style from './searchResults.module.scss';
 import { Loading } from '@common-ui';
 import { Player } from '@services';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { PlayerAction } from '@store';
 
 interface SearchResultsProps extends RouteComponentProps {
   searchQuery: string;
@@ -23,8 +25,11 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   loading,
   history
 }) => {
-  const handleOnClick = (playerId: number) => {
-    history.push({ pathname: `/player/${playerId}/` });
+  const dispatch = useDispatch();
+
+  const handleOnClick = (player: Player) => {
+    dispatch(PlayerAction.setPlayer(player));
+    history.push({ pathname: `/player/${player.id}/` });
   };
 
   const resultRows: ReactNode = useMemo(
@@ -34,7 +39,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
           <div
             className={cx(style.row, style.resultRow)}
             key={player.id}
-            onClick={() => handleOnClick(player.id)}
+            onClick={() => handleOnClick(player)}
           >
             <div className={style.playerName}>{`${player.first_name} ${player.last_name}`}</div>
             <div className={style.team}>{player.team?.full_name}</div>
