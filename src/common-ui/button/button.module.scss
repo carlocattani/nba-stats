@@ -1,0 +1,24 @@
+@import 'typography';
+
+.button {
+  @extend %font-label-button;
+  padding: 15px 30px;
+  border-radius: 20px;
+  border: 0;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+  &.primary {
+    background: $primary;
+    color: $white;
+  }
+  &.secondary {
+    background: $secondary;
+    color: $white;
+  }
+  &.disabled {
+    background: $gray100;
+    color: $gray200;
+  }
+}

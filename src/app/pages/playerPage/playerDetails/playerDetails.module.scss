@@ -1,0 +1,14 @@
+@import 'typography';
+
+.container {
+  display: flex;
+  margin-top: 30px;
+}
+
+.row {
+  padding-top: 8px;
+}
+
+.label {
+  @extend %font-label;
+}

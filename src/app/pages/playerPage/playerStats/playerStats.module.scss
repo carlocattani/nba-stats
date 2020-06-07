@@ -1,0 +1,47 @@
+@import 'typography';
+
+.container {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.headerRow {
+  @extend %font-label;
+  font-size: 16px;
+  background-color: $primary;
+  color: $white;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.dataRow {
+  &:nth-child(even) {
+    background-color: $primary-light;
+  }
+}
+
+.labelField {
+  flex-basis: 130px;
+  padding-left: 8px;
+}
+
+.valueField {
+  flex-basis: 50px;
+  text-align: right;
+}
+
+.label {
+  @extend %font-label;
+}
+
+.description {
+  @extend %font-caption;
+  color: $gray300;
+}

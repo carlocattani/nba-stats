@@ -6,6 +6,7 @@ import { Player } from '@services';
 import { mockPlayers } from '../../../../testing/player/player.mock';
 import debounce from 'lodash.debounce';
 import SearchResults from '../searchResults/searchResults.component';
+import { AiOutlineSearch } from 'react-icons/ai';
 
 export const SearchInput: React.FC = () => {
   const [loadingResults, setLoadingResults] = useState<boolean>(false);
@@ -43,8 +44,10 @@ export const SearchInput: React.FC = () => {
   return (
     <>
       <Input
+        placeholder='Search for a player'
         onValueChange={handleOnValueChange}
         className={cx({ [style.inputWithSearchResults]: showSearchResults })}
+        suffix={<AiOutlineSearch size='24px' />}
       />
       <SearchResults
         searchQuery={searchQuery}

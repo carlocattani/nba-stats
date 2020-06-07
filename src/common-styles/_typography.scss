@@ -22,6 +22,7 @@
 
 h1 {
   @extend %h1;
+  margin: 0;
 }
 
 %h2 {
@@ -32,11 +33,17 @@ h1 {
 
 h2 {
   @extend %h2;
+  margin: 0;
 }
 
 %font-caption {
   @extend %font-body;
   font-size: 10px;
+}
+
+%font-label {
+  @extend %font-body;
+  font-weight: 600;
 }
 
 %font-label-input {

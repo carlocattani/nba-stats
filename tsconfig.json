@@ -17,7 +17,7 @@
       "@assets": ["src/assets"],
       "@services": ["src/app/services/index.ts"],
       "@common-ui": ["src/common-ui/index.ts"],
-      "@testing": ["src/testingindex.ts"]
+      "@testing": ["src/testing/index.ts"]
     }
   },
   "include": ["src", "typings/*.d.ts"],

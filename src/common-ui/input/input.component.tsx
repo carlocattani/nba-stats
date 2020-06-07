@@ -1,4 +1,4 @@
-import React, { useState, useCallback, ChangeEvent } from 'react';
+import React, { useState, useCallback, ChangeEvent, ReactNode } from 'react';
 import cx from 'classnames';
 
 import style from './input.module.scss';
@@ -11,6 +11,7 @@ interface InputProps {
   onValueChange?: (value: string) => void;
   autoFocus?: boolean;
   className?: string;
+  suffix?: ReactNode;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -18,7 +19,8 @@ export const Input: React.FC<InputProps> = ({
   placeholder,
   onValueChange,
   autoFocus = false,
-  className
+  className,
+  suffix
 }) => {
   const [value, setValue] = useState<string>('');
 
@@ -43,6 +45,7 @@ export const Input: React.FC<InputProps> = ({
         placeholder={placeholder}
         autoFocus={autoFocus}
       />
+      {suffix && <div className={cx(style.suffix, { [style.emptyInput]: !value })}>{suffix}</div>}
     </div>
   );
 };

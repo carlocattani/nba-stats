@@ -11,7 +11,7 @@
   border-radius: 20px;
   background: $white;
   border: 3px solid $gray200;
-  padding: 16px 20px;
+  padding: 16px 44px 16px 20px;
   &::-webkit-input-placeholder {
     color: $gray200;
   }
@@ -22,4 +22,12 @@
     }
   }
   -webkit-appearance: none;
+}
+
+.suffix {
+  @extend %font-label-input;
+  color: $gray200;
+  position: absolute;
+  top: 16px;
+  right: 20px;
 }

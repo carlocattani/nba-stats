@@ -1,0 +1,55 @@
+@import 'typography';
+@import 'mixin';
+
+$imageSize: 130px;
+
+.container {
+  display: flex;
+  justify-content: center;
+  height: $imageSize;
+  width: $imageSize;
+  margin-right: 20px;
+}
+
+.loading {
+  -webkit-animation: bounce 700ms cubic-bezier(0.17, 0.67, 0.97, 0.61) infinite;
+  animation: bounce 700ms cubic-bezier(0.17, 0.67, 0.97, 0.61) infinite;
+  align-self: flex-end;
+  color: $primary-light;
+}
+
+.image {
+  height: $imageSize;
+  width: $imageSize;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 20%;
+  animation: fade-in 300ms;
+  -webkit-animation: fade-in 300ms;
+}
+
+@include keyframes(fade-in) {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@include keyframes(bounce) {
+  0%,
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+  }
+  60% {
+    -webkit-transform: translateY(-40px);
+    transform: translateY(-40px);
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+  }
+}

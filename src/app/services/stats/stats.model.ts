@@ -26,3 +26,17 @@ export interface SeasonAverages {
 export interface SeasonAveragesResponse {
   data: SeasonAverages[];
 }
+
+export interface SeasonAveragesRequest {
+  season?: number;
+  player_ids?: number[];
+}
+
+export interface SeasonAveragesLabel {
+  code: string;
+  description: string;
+}
+
+export type SeasonAveragesLabelMap = {
+  [K in keyof SeasonAverages]?: SeasonAveragesLabel;
+};

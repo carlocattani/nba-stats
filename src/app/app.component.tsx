@@ -6,17 +6,11 @@ import style from './app.module.scss';
 const Homepage = React.lazy(() => import('./pages/homepage/homepage.component'));
 const PlayerPage = React.lazy(() => import('./pages/playerPage/playerPage.component'));
 
-const fallback: ReactNode = (
-  <div className={style.loading}>
-    <Loading />
-  </div>
-);
-
 export const App: React.FC = () => {
   return (
     <div className={style.container}>
       <Router>
-        <React.Suspense fallback={fallback}>
+        <React.Suspense fallback={<Loading />}>
           <Navbar />
           <Switch>
             <Route path='/' exact={true} component={Homepage} />
