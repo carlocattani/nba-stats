@@ -9,5 +9,8 @@ export const PlayerSelector = {
     return (state: CommonState): Player => {
       return state.player.players[playerId];
     };
+  },
+  getRecentlyViewed(state: CommonState): Player[] {
+    return state.player.recentlyViewed;
   }
 };

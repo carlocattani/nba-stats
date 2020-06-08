@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 export const Logo: React.FC = () => {
   return (
-    <Link to={'/'} className={style.link}>
+    <Link to={'/'}>
       <div className={style.logo}>
         <GiBasketballBasket className={style.icon} />
         <span className={style.nba}>NBA</span>

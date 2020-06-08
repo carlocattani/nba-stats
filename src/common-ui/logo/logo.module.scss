@@ -5,13 +5,7 @@
   font-size: 40px;
   display: flex;
   align-items: center;
-}
-
-.link {
-  text-decoration: none;
-  &:focus {
-    outline: none;
-  }
+  margin-bottom: 15px;
 }
 
 .icon {

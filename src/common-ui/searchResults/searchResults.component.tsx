@@ -1,36 +1,41 @@
 import React, { useMemo, ReactNode } from 'react';
 import cx from 'classnames';
 import style from './searchResults.module.scss';
-import { Loading } from '@common-ui';
-import { Player } from '@services';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { Player, toPlayerName } from '@services';
 import { useDispatch } from 'react-redux';
 import { PlayerAction } from '@store';
+import { Loading } from '../loading/loading.component';
 
-interface SearchResultsProps extends RouteComponentProps {
+interface SearchResultsProps {
   searchQuery: string;
   searchResults: Player[];
   loading: boolean;
+  onSelection?: (playerId: number) => void;
 }
 
-const loadingRow: ReactNode = (
-  <div className={style.row}>
-    <Loading />
-  </div>
-);
-
-const SearchResults: React.FC<SearchResultsProps> = ({
+export const SearchResults: React.FC<SearchResultsProps> = ({
   searchQuery,
   searchResults = [],
   loading,
-  history
+  onSelection
 }) => {
   const dispatch = useDispatch();
 
   const handleOnClick = (player: Player) => {
+    if (onSelection) {
+      onSelection(player.id);
+    }
     dispatch(PlayerAction.setPlayer(player));
-    history.push({ pathname: `/player/${player.id}/` });
   };
+
+  const loadingRow: ReactNode = useMemo(
+    () => (
+      <div className={style.row}>
+        <Loading />
+      </div>
+    ),
+    []
+  );
 
   const resultRows: ReactNode = useMemo(
     () =>
@@ -41,7 +46,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
             key={player.id}
             onClick={() => handleOnClick(player)}
           >
-            <div className={style.playerName}>{`${player.first_name} ${player.last_name}`}</div>
+            <div className={style.playerName}>{toPlayerName(player)}</div>
             <div className={style.team}>{player.team?.full_name}</div>
           </div>
         ))
@@ -57,5 +62,3 @@ const SearchResults: React.FC<SearchResultsProps> = ({
 
   return <div className={style.container}>{loading ? loadingRow : resultRows}</div>;
 };
-
-export default withRouter(SearchResults);

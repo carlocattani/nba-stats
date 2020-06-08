@@ -33,6 +33,7 @@
 .team {
   @extend %font-caption;
   color: $primary;
+  padding-left: 10px;
 }
 
 @include keyframes(fade-in) {

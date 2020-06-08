@@ -1,0 +1,24 @@
+@import 'variables';
+
+.container {
+  max-width: 320px;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.input {
+  flex: 25%;
+}
+
+.button {
+  margin-left: 20px;
+  flex: 75%;
+}
+
+.message {
+  height: 1em;
+}

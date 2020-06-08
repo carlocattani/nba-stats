@@ -4,3 +4,5 @@ export * from './loading/loading.component';
 export * from './logo/logo.component';
 export * from './navbar/navbar.component';
 export * from './pageNotFound/pageNotFound.component';
+export * from './searchInput/searchInput.component';
+export * from './searchResults/searchResults.component';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import style from './playerPicture.module.scss';
 import { Player, fetchPlayerPicture } from '@services';
 import noPicture from '@assets/player/no-picture.png';
@@ -8,34 +8,43 @@ interface PlayerPictureProps {
   player: Player;
 }
 
+type PictureUrlByPlayerId = Record<number, string>;
+
 export const PlayerPicture: React.FC<PlayerPictureProps> = ({ player }) => {
   const [loading, setLoading] = useState<boolean>();
-  const [pictureUrl, setPictureUrl] = useState<string>();
+  const [pictureUrlByPlayerId, setPictureUrlByPlayerId] = useState<PictureUrlByPlayerId>({});
+
+  const updatePictureUrl = useCallback(
+    (playerId: number, pictureUrl: string) => {
+      setPictureUrlByPlayerId(pictures => {
+        return { ...pictures, [playerId]: pictureUrl };
+      });
+    },
+    [setPictureUrlByPlayerId]
+  );
 
   useEffect(() => {
-    if (player && !pictureUrl) {
+    if (player && !pictureUrlByPlayerId[player.id]) {
       setLoading(true);
       fetchPlayerPicture(player.first_name, player.last_name)
         .then(picture => {
           if (picture) {
-            const imageUrl = window.URL.createObjectURL(picture);
-            console.log('createObjectURL', imageUrl);
-            setPictureUrl(imageUrl);
+            updatePictureUrl(player.id, window.URL.createObjectURL(picture));
           }
         })
         .catch(() => {
-          setPictureUrl(noPicture);
+          updatePictureUrl(player.id, noPicture);
         })
         .finally(() => {
           setLoading(false);
         });
     }
     return () => {
-      if (pictureUrl && noPicture !== noPicture) {
-        window.URL.revokeObjectURL(pictureUrl);
+      if (pictureUrlByPlayerId) {
+        Object.values(pictureUrlByPlayerId).map(window.URL.revokeObjectURL);
       }
     };
-  }, [player, pictureUrl]);
+  }, [player, pictureUrlByPlayerId]);
 
   if (!player) {
     return null;
@@ -57,7 +66,7 @@ export const PlayerPicture: React.FC<PlayerPictureProps> = ({ player }) => {
       ) : (
         <div
           className={style.image}
-          style={{ backgroundImage: `url(${pictureUrl || noPicture}` }}
+          style={{ backgroundImage: `url(${pictureUrlByPlayerId[player.id] || noPicture})` }}
         />
       )}
     </div>

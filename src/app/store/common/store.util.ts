@@ -6,6 +6,7 @@ import { playerReducer } from '../player/player.reducer';
 import { playerSagas } from '../player/player.saga';
 import { statsReducer } from '../stats/stats.reducer';
 import { statsSagas } from '../stats/stats.saga';
+import { layoutReducer } from '../layout/layout.reducer';
 
 // custom compose for the redux devtool extension
 const composeEnhancer = (() => {
@@ -25,7 +26,8 @@ const sagaMiddleware = createSagaMiddleware();
 
 const commonReducers: ReducersMapObject<CommonState> = {
   player: playerReducer,
-  stats: statsReducer
+  stats: statsReducer,
+  layout: layoutReducer
 };
 
 export const store = createStore(

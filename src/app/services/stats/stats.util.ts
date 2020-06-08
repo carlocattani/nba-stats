@@ -22,3 +22,10 @@ export const seasonAveragesLabelMap: SeasonAveragesLabelMap = {
   fg3_pct: { code: 'FG3%', description: '3PT Field Goal %' },
   ft_pct: { code: 'FT%', description: 'Free Throw %' }
 };
+
+export const validateYear = (value: string): number | undefined => {
+  const minYear = 1950;
+  const maxYear = new Date().getFullYear();
+  const numericValue = +value;
+  return numericValue >= minYear && numericValue <= maxYear ? numericValue : undefined;
+};

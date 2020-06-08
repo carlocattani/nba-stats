@@ -1,0 +1,29 @@
+@import 'typography';
+
+.container {
+  padding: 8px 16px;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.text {
+  @extend %font-caption;
+  color: $gray300;
+  padding-right: 4px;
+}
+
+.player {
+  margin: 4px 4px;
+}
+
+.link {
+  display: block;
+  padding: 4px;
+  border-radius: 4px;
+  font-weight: 500;
+  background-color: $gray100;
+  &:hover {
+    background-color: $primary-light;
+  }
+}

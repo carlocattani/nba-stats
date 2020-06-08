@@ -23,9 +23,7 @@ export const statsReducer = createReducer<StatsState, Action>(initialState)
         ...seasonAvgByPlayer,
         [playerId]: avgByYear
       };
-      console.log('avgByPlayer', avgByPlayer);
       seasonAvgByPlayer = avgByPlayer;
-      console.log('seasonAvgByPlayer', seasonAvgByPlayer);
     });
     return {
       ...state,

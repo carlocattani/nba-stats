@@ -29,7 +29,7 @@ export const fetchPlayer = (id: number): Promise<Player> => {
  * @param id
  */
 export const fetchPlayerPicture = (firstName: string, lastName: string): Promise<Blob> => {
-  const endpoint = `https://nba-players.herokuapp.com/players/${firstName}/${lastName}`;
+  const endpoint = `https://nba-players.herokuapp.com/players/${lastName}/${firstName}`;
   return fetch(endpoint).then(response => {
     const contentType = response.headers.get('content-type');
     if (contentType?.indexOf('image') > -1) {

@@ -1,5 +1,7 @@
 .cover {
-  background: url(../../../assets/homepage/cover.png) no-repeat center center fixed;
+  background-attachment: fixed;
+  background-position: center center;
+  background-repeat: no-repeat;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -13,16 +15,20 @@
 }
 
 .searchInput {
+  position: absolute;
   width: 50%;
-  margin-top: 100px;
-  transform: translateX(50%);
+  left: 50%;
+  top: 175px;
+  transform: translateX(-50%);
+  z-index: 1;
 }
 
 .button {
   position: absolute;
   left: 50%;
-  top: 400px;
+  top: 340px;
   transform: translateX(-50%);
+  z-index: 0;
 }
 
 @media (max-width: 960px) {
@@ -31,12 +37,11 @@
   }
 
   .searchInput {
-    width: 100%;
-    margin-top: 50px;
-    transform: translateX(0);
+    width: 90%;
+    top: 110px;
   }
 
   .button {
-    top: 250px;
+    top: 270px;
   }
 }

@@ -5,6 +5,17 @@ body {
   margin: 0;
 }
 
+a {
+  color: $primary;
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
+  &:focus {
+    outline: none;
+  }
+}
+
 .container {
   padding: $navbarOffset 20px 20px 20px;
 }
