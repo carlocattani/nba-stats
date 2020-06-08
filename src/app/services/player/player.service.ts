@@ -26,7 +26,8 @@ export const fetchPlayer = (id: number): Promise<Player> => {
 
 /**
  * endpoint to retrieve the player picture
- * @param id
+ * @param firstName
+ * @param lastName
  */
 export const fetchPlayerPicture = (firstName: string, lastName: string): Promise<Blob> => {
   const endpoint = `https://nba-players.herokuapp.com/players/${lastName}/${firstName}`;

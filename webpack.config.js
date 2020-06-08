@@ -1,5 +1,5 @@
 const path = require('path');
-
+const CopyPlugin = require('copy-webpack-plugin');
 const commonStylesPath = path.resolve(__dirname, './src/common-styles');
 
 module.exports = env => {
@@ -70,6 +70,7 @@ module.exports = env => {
           }
         }
       ]
-    }
+    },
+    plugins: [new CopyPlugin({ patterns: [{ from: '_redirects' }] })]
   };
 };
