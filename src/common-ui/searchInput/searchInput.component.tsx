@@ -7,10 +7,14 @@ import { SearchResults } from '../searchResults/searchResults.component';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { Input } from '../input/input.component';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { PlayerAction } from '@store';
 
 interface SearchInputProps extends RouteComponentProps {}
 
 const SearchInputComponent: React.FC<SearchInputProps> = ({ history }) => {
+  const dispatch = useDispatch();
+
   const [loadingResults, setLoadingResults] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>();
   const [searchResults, setSearchResults] = useState<Player[]>([]);
@@ -45,10 +49,10 @@ const SearchInputComponent: React.FC<SearchInputProps> = ({ history }) => {
     setShowSearchResults(searchResults.length > 0);
   };
 
-  const handleOnSelection = (playerId: number) => {
-    console.log('handleOnSelection', playerId);
+  const handleOnSelection = (player: Player) => {
     setShowSearchResults(false);
-    history.push({ pathname: `/player/${playerId}/` });
+    dispatch(PlayerAction.setPlayer(player));
+    history.push({ pathname: `/player/${player.id}/` });
   };
 
   return (

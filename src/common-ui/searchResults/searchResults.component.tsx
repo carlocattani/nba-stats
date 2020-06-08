@@ -2,15 +2,13 @@ import React, { useMemo, ReactNode } from 'react';
 import cx from 'classnames';
 import style from './searchResults.module.scss';
 import { Player, toPlayerName } from '@services';
-import { useDispatch } from 'react-redux';
-import { PlayerAction } from '@store';
 import { Loading } from '../loading/loading.component';
 
 interface SearchResultsProps {
   searchQuery: string;
   searchResults: Player[];
   loading: boolean;
-  onSelection?: (playerId: number) => void;
+  onSelection?: (player: Player) => void;
 }
 
 export const SearchResults: React.FC<SearchResultsProps> = ({
@@ -19,13 +17,10 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
   loading,
   onSelection
 }) => {
-  const dispatch = useDispatch();
-
   const handleOnClick = (player: Player) => {
     if (onSelection) {
-      onSelection(player.id);
+      onSelection(player);
     }
-    dispatch(PlayerAction.setPlayer(player));
   };
 
   const loadingRow: ReactNode = useMemo(

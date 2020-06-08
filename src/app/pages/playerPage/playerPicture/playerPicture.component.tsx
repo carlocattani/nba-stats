@@ -28,9 +28,7 @@ export const PlayerPicture: React.FC<PlayerPictureProps> = ({ player }) => {
       setLoading(true);
       fetchPlayerPicture(player.first_name, player.last_name)
         .then(picture => {
-          if (picture) {
-            updatePictureUrl(player.id, window.URL.createObjectURL(picture));
-          }
+          updatePictureUrl(player.id, picture ? window.URL.createObjectURL(picture) : noPicture);
         })
         .catch(() => {
           updatePictureUrl(player.id, noPicture);
@@ -44,25 +42,18 @@ export const PlayerPicture: React.FC<PlayerPictureProps> = ({ player }) => {
         Object.values(pictureUrlByPlayerId).map(window.URL.revokeObjectURL);
       }
     };
-  }, [player, pictureUrlByPlayerId]);
+  }, [player, pictureUrlByPlayerId, updatePictureUrl]);
 
   if (!player) {
     return null;
   }
 
-  const loadingAnimation = useMemo(
-    () => (
-      <div className={style.loading}>
-        <GiBasketballBall size='40px' />
-      </div>
-    ),
-    []
-  );
-
   return (
     <div className={style.container}>
       {loading ? (
-        loadingAnimation
+        <div className={style.loading}>
+          <GiBasketballBall size='40px' />
+        </div>
       ) : (
         <div
           className={style.image}

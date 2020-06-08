@@ -1,0 +1,9 @@
+@import 'typography';
+
+.row {
+  padding-top: 8px;
+}
+
+.label {
+  @extend %font-label;
+}

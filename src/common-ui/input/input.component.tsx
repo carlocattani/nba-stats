@@ -1,4 +1,4 @@
-import React, { useState, useCallback, ChangeEvent, ReactNode } from 'react';
+import React, { useState, useCallback, ChangeEvent, ReactNode, useEffect } from 'react';
 import cx from 'classnames';
 import style from './input.module.scss';
 

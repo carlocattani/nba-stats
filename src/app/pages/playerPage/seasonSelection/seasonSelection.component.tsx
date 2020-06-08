@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { SeasonAvgByYear, StatsSelector, StatsAction } from '@store';
 import { useSelector, useDispatch } from 'react-redux';
 import { Input, Button } from '@common-ui';
@@ -19,17 +19,11 @@ export const SeasonSelection: React.FC<SeasonSelectionProps> = ({ playerId }) =>
 
   const hasStatsForTheYear = useCallback(year => statsByYear && statsByYear[year], [statsByYear]);
 
-  const handleOnChange = (value: string) => {
-    setYear(validateYear(value));
-  };
-
-  const loadAdditionalSeason = () => {
-    if (year && !hasStatsForTheYear(year)) {
-      setRequestedYear(year);
-      setMessage(undefined);
-      dispatch(StatsAction.getSeasonAverages.request({ player_ids: [playerId], season: year }));
+  useEffect(() => {
+    if (playerId) {
+      setRequestedYear(undefined);
     }
-  };
+  }, [playerId]);
 
   useEffect(() => {
     if (loading === false) {
@@ -44,6 +38,18 @@ export const SeasonSelection: React.FC<SeasonSelectionProps> = ({ playerId }) =>
       setMessage(undefined);
     }
   }, [loading, requestedYear, statsByYear]);
+
+  const handleOnChange = (value: string) => {
+    setYear(validateYear(value));
+  };
+
+  const loadAdditionalSeason = () => {
+    if (year && !hasStatsForTheYear(year)) {
+      setRequestedYear(year);
+      setMessage(undefined);
+      dispatch(StatsAction.getSeasonAverages.request({ player_ids: [playerId], season: year }));
+    }
+  };
 
   return (
     <div className={style.container}>
