@@ -1,8 +1,8 @@
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { SeasonAvgByYear, StatsSelector, StatsAction } from '@store';
 import { useSelector, useDispatch } from 'react-redux';
-import { Input, Button } from '@common-ui';
-import { validateYear } from '@services';
+import { Input, Button, Error } from '@common-ui';
+import { StatsUtil } from '@services';
 import style from './seasonSelection.module.scss';
 
 interface SeasonSelectionProps {
@@ -13,42 +13,46 @@ export const SeasonSelection: React.FC<SeasonSelectionProps> = ({ playerId }) =>
   const dispatch = useDispatch();
   const [year, setYear] = useState<number>();
   const loading = useSelector(StatsSelector.isLoading);
+  const errorMessage = useSelector(StatsSelector.getErrorMessage);
+  const [noStatsMessage, setNoStatsMessage] = useState<string>();
   const statsByYear: SeasonAvgByYear = useSelector(StatsSelector.getPlayerStats(playerId));
-  const [requestedYear, setRequestedYear] = useState<number>();
-  const [message, setMessage] = useState<string>();
+  const [requestedSeason, setRequestedSeason] = useState<number>(StatsUtil.currentSeason);
 
   const hasStatsForTheYear = useCallback(year => statsByYear && statsByYear[year], [statsByYear]);
 
   useEffect(() => {
-    if (playerId) {
-      setRequestedYear(undefined);
+    if (playerId && !statsByYear) {
+      loadSeason(StatsUtil.currentSeason);
     }
   }, [playerId]);
 
   useEffect(() => {
     if (loading === false) {
-      if (requestedYear && !hasStatsForTheYear(requestedYear)) {
-        setMessage(`Season averages not available for ${requestedYear}`);
-      } else if (!requestedYear && !statsByYear) {
-        setMessage('No data for the current season, try another year');
+      if (!hasStatsForTheYear(requestedSeason)) {
+        const season =
+          requestedSeason === StatsUtil.currentSeason ? 'the current season' : requestedSeason;
+        setNoStatsMessage(`No stats for ${season}, try another year`);
       } else {
-        setMessage(undefined);
+        setNoStatsMessage(undefined);
       }
     } else {
-      setMessage(undefined);
+      setNoStatsMessage(undefined);
     }
-  }, [loading, requestedYear, statsByYear]);
+  }, [loading, requestedSeason, statsByYear]);
 
-  const handleOnChange = (value: string) => {
-    setYear(validateYear(value));
+  const loadSeason = (season: number) => {
+    setRequestedSeason(season);
+    if (season && !hasStatsForTheYear(season)) {
+      dispatch(StatsAction.getSeasonAverages.request({ player_ids: [playerId], season: season }));
+    }
   };
 
   const loadAdditionalSeason = () => {
-    if (year && !hasStatsForTheYear(year)) {
-      setRequestedYear(year);
-      setMessage(undefined);
-      dispatch(StatsAction.getSeasonAverages.request({ player_ids: [playerId], season: year }));
-    }
+    loadSeason(year);
+  };
+
+  const handleOnChange = (value: string) => {
+    setYear(StatsUtil.validateYear(value));
   };
 
   return (
@@ -64,7 +68,9 @@ export const SeasonSelection: React.FC<SeasonSelectionProps> = ({ playerId }) =>
           Load stats
         </Button>
       </div>
-      <div className={style.message}>{message}</div>
+      <div className={style.message}>
+        {errorMessage ? <Error message={errorMessage} /> : noStatsMessage}
+      </div>
     </div>
   );
 };

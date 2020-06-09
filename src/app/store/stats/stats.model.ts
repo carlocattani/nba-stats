@@ -9,4 +9,5 @@ export type SeasonAvgByPlayer = Record<number, SeasonAvgByYear>;
 export interface StatsState {
   seasonAvgByPlayer: SeasonAvgByPlayer;
   isLoading?: boolean;
+  errorMessage?: string;
 }

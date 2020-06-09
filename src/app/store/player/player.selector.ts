@@ -12,5 +12,8 @@ export const PlayerSelector = {
   },
   getRecentlyViewed(state: CommonState): Player[] {
     return state.player.recentlyViewed;
+  },
+  getErrorMessage(state: CommonState): string {
+    return state.player.errorMessage;
   }
 };

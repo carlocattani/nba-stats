@@ -3,8 +3,11 @@ import style from './recentlyViewed.module.scss';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { PlayerSelector } from '@store';
-import { Player, toPlayerName } from '@services';
+import { Player, PlayerUtil } from '@services';
 
+/**
+ * shows a list of the last viewed players
+ */
 export const RecentlyViewed: React.FC = () => {
   const players = useSelector(PlayerSelector.getRecentlyViewed);
 
@@ -12,7 +15,7 @@ export const RecentlyViewed: React.FC = () => {
     return player?.id ? (
       <div className={style.player} key={player.id}>
         <Link to={`/player/${player.id}/`} className={style.link}>
-          {toPlayerName(player)}
+          {PlayerUtil.getPlayerName(player)}
         </Link>
       </div>
     ) : (

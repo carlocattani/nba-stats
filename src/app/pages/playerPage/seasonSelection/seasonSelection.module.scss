@@ -21,3 +21,21 @@
 .message {
   height: 1em;
 }
+
+@media (max-width: $mobileBreakpoint) {
+  .input {
+    width: 115px;
+  }
+
+  .form {
+    margin-bottom: 10px;
+  }
+
+  .button {
+    margin-left: 10px;
+  }
+
+  .message {
+    height: 2em;
+  }
+}

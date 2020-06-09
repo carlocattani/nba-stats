@@ -11,7 +11,7 @@ export const Navbar: React.FC = () => {
     <div className={style.container}>
       <div className={style.items}>
         <Logo />
-        {showSearch && <SearchInput />}
+        {showSearch && <SearchInput className={style.search} />}
       </div>
     </div>
   );

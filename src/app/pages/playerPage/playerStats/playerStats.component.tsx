@@ -1,18 +1,16 @@
-import React, { useEffect, ReactNode, useMemo } from 'react';
+import React, { ReactNode, useMemo } from 'react';
 import style from './playerStats.module.scss';
-import { seasonAveragesLabelMap, SeasonAverages } from '@services';
+import { StatsUtil, SeasonAverages } from '@services';
 import { Loading } from '@common-ui';
 import cx from 'classnames';
-import { StatsSelector, SeasonAvgByYear, StatsAction } from '@store';
-import { useSelector, useDispatch } from 'react-redux';
-import { SeasonSelection } from '../seasonSelection/seasonSelection.component';
+import { StatsSelector, SeasonAvgByYear } from '@store';
+import { useSelector } from 'react-redux';
 
 interface PlayerStatsProps {
   playerId: number;
 }
 
 export const PlayerStats: React.FC<PlayerStatsProps> = ({ playerId }) => {
-  const dispatch = useDispatch();
   const loading = useSelector(StatsSelector.isLoading);
   const statsByYear: SeasonAvgByYear = useSelector(StatsSelector.getPlayerStats(playerId));
 
@@ -20,12 +18,6 @@ export const PlayerStats: React.FC<PlayerStatsProps> = ({ playerId }) => {
     () => Object.entries(statsByYear || {}),
     [statsByYear]
   );
-
-  useEffect(() => {
-    if (playerId && !statsByYear) {
-      dispatch(StatsAction.getSeasonAverages.request({ player_ids: [playerId] }));
-    }
-  }, [playerId]);
 
   const headerRow: ReactNode = (
     <div className={cx(style.row, style.headerRow)}>
@@ -43,7 +35,7 @@ export const PlayerStats: React.FC<PlayerStatsProps> = ({ playerId }) => {
       {statsByYearArray.length > 0 && (
         <>
           {headerRow}
-          {Object.entries(seasonAveragesLabelMap).map(([statKey, label]) => (
+          {Object.entries(StatsUtil.seasonAveragesLabelMap).map(([statKey, label]) => (
             <div key={statKey} className={cx(style.row, style.dataRow)}>
               <div className={style.labelField}>
                 <div className={style.label}>{label.code}</div>
@@ -63,10 +55,5 @@ export const PlayerStats: React.FC<PlayerStatsProps> = ({ playerId }) => {
     </>
   );
 
-  return (
-    <div className={style.container}>
-      <SeasonSelection playerId={playerId} />
-      {loading ? <Loading /> : dataRows}
-    </div>
-  );
+  return <div>{loading ? <Loading /> : dataRows}</div>;
 };

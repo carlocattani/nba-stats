@@ -1,10 +1,5 @@
 @import 'typography';
 
-.container {
-  margin-top: 60px;
-  margin-bottom: 40px;
-}
-
 .row {
   display: flex;
   align-items: center;
@@ -44,4 +39,14 @@
 .description {
   @extend %font-caption;
   color: $gray300;
+}
+
+@media (max-width: $mobileBreakpoint) {
+  .labelField {
+    flex-basis: 60px;
+  }
+
+  .description {
+    display: none;
+  }
 }

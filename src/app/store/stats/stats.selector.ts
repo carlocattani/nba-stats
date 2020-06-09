@@ -9,5 +9,8 @@ export const StatsSelector = {
     return (state: CommonState): SeasonAvgByYear => {
       return state.stats.seasonAvgByPlayer[playerId];
     };
+  },
+  getErrorMessage(state: CommonState): string {
+    return state.stats.errorMessage;
   }
 };

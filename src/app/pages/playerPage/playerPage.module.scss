@@ -1,9 +1,27 @@
+@import 'variables';
+
 .container {
   margin-top: 40px;
 }
 
-@media (max-width: 960px) {
+.playerSection {
+  display: flex;
+  margin-top: 30px;
+  height: 135px;
+}
+
+.statsSection {
+  margin-top: 60px;
+  margin-bottom: 40px;
+}
+
+@media (max-width: $mobileBreakpoint) {
   .container {
     margin-top: 100px;
+  }
+
+  .statsSection {
+    margin-top: 30px;
+    margin-bottom: 30px;
   }
 }

@@ -1,3 +1,5 @@
+@import 'variables';
+
 .cover {
   background-attachment: fixed;
   background-position: center center;
@@ -31,7 +33,7 @@
   z-index: 0;
 }
 
-@media (max-width: 960px) {
+@media (max-width: $mobileBreakpoint) {
   .container {
     padding: 0;
   }

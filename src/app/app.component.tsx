@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Loading, PageNotFound, Navbar } from '@common-ui';
 import style from './app.module.scss';
 import { Provider } from 'react-redux';
-import { store } from '@store';
+import { StoreUtil } from '@store';
 
 const Homepage = React.lazy(() => import('./pages/homepage/homepage.component'));
 const PlayerPage = React.lazy(() => import('./pages/playerPage/playerPage.component'));
@@ -11,7 +11,7 @@ const PlayerPage = React.lazy(() => import('./pages/playerPage/playerPage.compon
 export const App: React.FC = () => {
   return (
     <div className={style.container}>
-      <Provider store={store}>
+      <Provider store={StoreUtil.store}>
         <Router>
           <React.Suspense fallback={<Loading />}>
             <Navbar />

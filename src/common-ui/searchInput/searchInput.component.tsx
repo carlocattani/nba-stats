@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
 import style from './searchInput.module.scss';
-import { Player, PlayersResponse, fetchPlayers } from '@services';
+import { Player, PlayersResponse, PlayerService } from '@services';
 import debounce from 'lodash.debounce';
 import { SearchResults } from '../searchResults/searchResults.component';
 import { AiOutlineSearch } from 'react-icons/ai';
@@ -10,29 +10,36 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { PlayerAction } from '@store';
 
-interface SearchInputProps extends RouteComponentProps {}
+interface SearchInputProps extends RouteComponentProps {
+  className?: string;
+}
 
-const SearchInputComponent: React.FC<SearchInputProps> = ({ history }) => {
+const SearchInputComponent: React.FC<SearchInputProps> = ({ history, className }) => {
   const dispatch = useDispatch();
 
-  const [loadingResults, setLoadingResults] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>();
   const [searchQuery, setSearchQuery] = useState<string>();
   const [searchResults, setSearchResults] = useState<Player[]>([]);
   const [showSearchResults, setShowSearchResults] = useState<boolean>();
 
   useEffect(() => {
-    setShowSearchResults(!!searchQuery || loadingResults);
-  }, [searchQuery, loadingResults]);
+    setShowSearchResults(!!searchQuery || loading);
+  }, [searchQuery, loading]);
 
   useEffect(() => {
+    setErrorMessage(undefined);
     if (searchQuery) {
-      setLoadingResults(true);
-      fetchPlayers({ search: searchQuery })
+      setLoading(true);
+      PlayerService.fetchPlayers({ search: searchQuery })
         .then((response: PlayersResponse) => {
           setSearchResults(response?.data || []);
         })
+        .catch(e => {
+          setErrorMessage(e?.message);
+        })
         .finally(() => {
-          setLoadingResults(false);
+          setLoading(false);
         });
     } else {
       setSearchResults([]);
@@ -43,7 +50,7 @@ const SearchInputComponent: React.FC<SearchInputProps> = ({ history }) => {
     setSearchQuery(value);
   };
 
-  const handleOnValueChange = debounce(onSearch, 300);
+  const handleOnValueChange = debounce(onSearch, 350);
 
   const handleOnFocus = () => {
     setShowSearchResults(searchResults.length > 0);
@@ -56,7 +63,7 @@ const SearchInputComponent: React.FC<SearchInputProps> = ({ history }) => {
   };
 
   return (
-    <div>
+    <div className={className}>
       <Input
         placeholder='Search for a player'
         onValueChange={handleOnValueChange}
@@ -66,9 +73,9 @@ const SearchInputComponent: React.FC<SearchInputProps> = ({ history }) => {
       />
       {showSearchResults && (
         <SearchResults
-          searchQuery={searchQuery}
           searchResults={searchResults}
-          loading={loadingResults}
+          loading={loading}
+          errorMessage={errorMessage}
           onSelection={handleOnSelection}
         />
       )}

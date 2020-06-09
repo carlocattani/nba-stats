@@ -1,5 +1,6 @@
-import { SeasonAverages } from '@services';
-export const mockSeasonAverages: SeasonAverages = {
+import { SeasonAverages, SeasonAveragesResponse } from '@services';
+
+const mockSeasonAverages: SeasonAverages = {
   games_played: 37,
   player_id: 237,
   season: 2018,
@@ -22,4 +23,13 @@ export const mockSeasonAverages: SeasonAverages = {
   fg_pct: 0.516,
   fg3_pct: 0.358,
   ft_pct: 0.674
+};
+
+const mockSeasonAveragesResponse: SeasonAveragesResponse = {
+  data: [mockSeasonAverages]
+};
+
+export const StatsTesting = {
+  mockSeasonAverages,
+  mockSeasonAveragesResponse
 };

@@ -1,6 +1,6 @@
 import { SeasonAveragesLabelMap } from './stats.model';
 
-export const seasonAveragesLabelMap: SeasonAveragesLabelMap = {
+const seasonAveragesLabelMap: SeasonAveragesLabelMap = {
   games_played: { code: 'GP', description: 'Games Played' },
   min: { code: 'MIN', description: 'Minutes Played' },
   fgm: { code: 'FGM', description: 'Field Goals Made' },
@@ -18,14 +18,24 @@ export const seasonAveragesLabelMap: SeasonAveragesLabelMap = {
   turnover: { code: 'TOV', description: 'Turnovers' },
   pf: { code: 'PF', description: 'Personal Fouls' },
   pts: { code: 'PTS', description: 'Points' },
-  fg_pct: { code: 'FG%', description: '2PT Field Goal %' },
+  fg_pct: { code: 'FG%', description: 'Field Goal %' },
   fg3_pct: { code: 'FG3%', description: '3PT Field Goal %' },
   ft_pct: { code: 'FT%', description: 'Free Throw %' }
 };
 
-export const validateYear = (value: string): number | undefined => {
-  const minYear = 1950;
-  const maxYear = new Date().getFullYear();
+const firstSeason: number = 1950;
+
+// TODO improve logic to determine the current season
+const currentSeason: number = new Date().getFullYear() - 1;
+
+const validateYear = (value: string): number | undefined => {
   const numericValue = +value;
-  return numericValue >= minYear && numericValue <= maxYear ? numericValue : undefined;
+  return numericValue >= firstSeason && numericValue <= currentSeason ? numericValue : undefined;
+};
+
+export const StatsUtil = {
+  seasonAveragesLabelMap,
+  firstSeason,
+  currentSeason,
+  validateYear
 };

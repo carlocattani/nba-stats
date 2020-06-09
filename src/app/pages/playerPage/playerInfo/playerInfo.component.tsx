@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import style from './playerInfo.module.scss';
-import { Player, toPlayerName } from '@services';
+import { Player, PlayerUtil } from '@services';
 import { useSelector } from 'react-redux';
 import { Loading } from '@common-ui';
 import { PlayerSelector } from '@store';
@@ -11,19 +11,13 @@ interface PlayerInfoProps {
 
 export const PlayerInfo: React.FC<PlayerInfoProps> = ({ player }) => {
   const loading = useSelector(PlayerSelector.isLoading);
-  const height = player?.height_feet
-    ? `${player.height_feet}-${player.height_inches || 0}`
-    : undefined;
+  const height = PlayerUtil.getPlayerHeight(player);
 
-  const showLoading = loading || !player;
-
-  return (
+  const playerData: ReactNode = (
     <>
-      {showLoading ? (
-        <Loading />
-      ) : (
+      {player && (
         <div>
-          <h2>{toPlayerName(player)}</h2>
+          <h2>{PlayerUtil.getPlayerName(player)}</h2>
           {height && (
             <div className={style.row}>
               <span className={style.label}>Height:</span> {height}
@@ -48,4 +42,6 @@ export const PlayerInfo: React.FC<PlayerInfoProps> = ({ player }) => {
       )}
     </>
   );
+
+  return <>{loading ? <Loading /> : playerData}</>;
 };

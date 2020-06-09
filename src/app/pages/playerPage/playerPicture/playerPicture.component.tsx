@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import style from './playerPicture.module.scss';
-import { Player, fetchPlayerPicture } from '@services';
+import { Player, PlayerService } from '@services';
 import noPicture from '@assets/player/no-picture.png';
 import { GiBasketballBall } from 'react-icons/gi';
 
@@ -26,7 +26,7 @@ export const PlayerPicture: React.FC<PlayerPictureProps> = ({ player }) => {
   useEffect(() => {
     if (player && !pictureUrlByPlayerId[player.id]) {
       setLoading(true);
-      fetchPlayerPicture(player.first_name, player.last_name)
+      PlayerService.fetchPlayerPicture(player.first_name, player.last_name)
         .then(picture => {
           updatePictureUrl(player.id, picture ? window.URL.createObjectURL(picture) : noPicture);
         })

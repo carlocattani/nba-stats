@@ -2,6 +2,7 @@
 @import 'mixin';
 
 $imageSize: 135px;
+$mobileImageSize: 115px;
 
 .container {
   display: flex;
@@ -51,5 +52,18 @@ $imageSize: 135px;
     transform: translateY(-40px);
     -webkit-animation-timing-function: ease-out;
     animation-timing-function: ease-out;
+  }
+}
+
+@media (max-width: $mobileBreakpoint) {
+  .container {
+    height: $mobileImageSize;
+    width: $mobileImageSize;
+    margin-right: 10px;
+  }
+
+  .image {
+    height: $mobileImageSize;
+    width: $mobileImageSize;
   }
 }

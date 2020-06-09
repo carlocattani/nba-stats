@@ -30,7 +30,7 @@ const commonReducers: ReducersMapObject<CommonState> = {
   layout: layoutReducer
 };
 
-export const store = createStore(
+const store = createStore(
   combineReducers(commonReducers),
   composeEnhancer(applyMiddleware(sagaMiddleware))
 );
@@ -40,3 +40,7 @@ function* rootSagas() {
 }
 
 sagaMiddleware.run(rootSagas);
+
+export const StoreUtil = {
+  store: store
+};
