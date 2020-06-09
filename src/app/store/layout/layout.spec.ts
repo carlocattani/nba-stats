@@ -15,7 +15,7 @@ describe('Layout', () => {
       store.dispatch(LayoutAction.setShowNavbarSearch(true));
     });
 
-    it('should toggle the show search input flag', () => {
+    it('should toggle the show search flag', () => {
       const show = LayoutSelector.showNavbarSearch(store.getState());
       expect(show).toEqual(true);
     });

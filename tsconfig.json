@@ -22,6 +22,6 @@
     }
   },
   "include": ["src", "typings/*.d.ts"],
-  "co mpileOnSave": false,
+  "compileOnSave": false,
   "exclude": ["node_modules"]
 }
